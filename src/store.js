@@ -1,7 +1,9 @@
-import { reactive, watch } from 'vue';
+import { reactive, watch } from 'vue'
 
-const cartData = JSON.parse(localStorage.getItem('cart')) || [];
-const userData = JSON.parse(localStorage.getItem('currentUser')) || null;
+/* ================= LOAD LOCALSTORAGE ================= */
+const cartData = JSON.parse(localStorage.getItem('cart')) || []
+const usersData = JSON.parse(localStorage.getItem('users')) || []
+const currentUserData = JSON.parse(localStorage.getItem('currentUser')) || null
 const productsData = JSON.parse(localStorage.getItem('products')) || [
     // Home / T-Shirts (Featured)
     { id: 1, name: 'Áo Thun', image: 'https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-embroidered-signature-t-shirt--HTY21WNPG900_PM2_Front%20view.png?wid=730&hei=730', price: '99.000.000 ₫', category: 'featured' },
@@ -44,88 +46,131 @@ const productsData = JSON.parse(localStorage.getItem('products')) || [
 
 export const store = reactive({
     cart: cartData,
-    currentUser: userData,
-    isLoggedIn: !!userData,
+    currentUser: currentUserData,
+    isLoggedIn: !!currentUserData,
+    users: usersData,
     products: productsData,
     posts: JSON.parse(localStorage.getItem('posts')) || [
         { id: 1, title: 'Bộ sưu tập Mùa Thu 2025', content: 'Khám phá những mẫu thiết kế mới nhất vừa ra mắt...', author: 'Admin', date: '2025-01-15', image: 'https://vn.louisvuitton.com/content/dam/lv/online/picture/asiapacific/2025/Women_Prefall_Odyssey_DI3.jpg?wid=600', comments: [], showComments: false, newCommentText: '', status: 'approved' },
         { id: 2, title: 'Phong cách doanh nhân', content: 'Lựa chọn trang phục phù hợp cho các quý ông...', author: 'Admin', date: '2025-01-16', image: '', comments: [], showComments: false, newCommentText: '', status: 'approved' }
     ],
 
-    savePosts() {
-        localStorage.setItem('posts', JSON.stringify(this.posts));
+    register(user) {
+        this.users.push(user)
+        localStorage.setItem('users', JSON.stringify(this.users))
+
+        this.currentUser = user
+        this.isLoggedIn = true
+        localStorage.setItem('currentUser', JSON.stringify(user))
+
+        this.profile = {
+            bio: '',
+            gender: '',
+            birthDate: '',
+            personalInfo: ''
+        }
+        localStorage.setItem('profile', JSON.stringify(this.profile))
     },
 
     login(user) {
-        this.currentUser = user;
-        this.isLoggedIn = true;
-        localStorage.setItem('currentUser', JSON.stringify(user));
+        this.currentUser = user
+        this.isLoggedIn = true
+        localStorage.setItem('currentUser', JSON.stringify(user))
+
+        const savedProfile = JSON.parse(localStorage.getItem('profile'))
+        this.profile = savedProfile || {
+            bio: '',
+            gender: '',
+            birthDate: '',
+            personalInfo: ''
+        }
     },
 
     logout() {
-        this.currentUser = null;
-        this.isLoggedIn = false;
-        localStorage.removeItem('currentUser');
+        this.currentUser = null
+        this.isLoggedIn = false
+        this.profile = {
+            bio: '',
+            gender: '',
+            birthDate: '',
+            personalInfo: ''
+        }
+        localStorage.removeItem('currentUser')
+        localStorage.removeItem('profile')
+    },
+
+    updateProfile(data) {
+        this.profile = { ...this.profile, ...data }
+        localStorage.setItem('profile', JSON.stringify(this.profile))
     },
 
     addToCart(product) {
-        this.cart.push(product);
-        localStorage.setItem('cart', JSON.stringify(this.cart));
-        alert('Đã thêm vào giỏ hàng: ' + product.name);
+        this.cart.push(product)
+        localStorage.setItem('cart', JSON.stringify(this.cart))
     },
 
     removeFromCart(index) {
-        this.cart.splice(index, 1);
-        localStorage.setItem('cart', JSON.stringify(this.cart));
+        this.cart.splice(index, 1)
+        localStorage.setItem('cart', JSON.stringify(this.cart))
     },
 
     saveProducts() {
-        localStorage.setItem('products', JSON.stringify(this.products));
+        localStorage.setItem('products', JSON.stringify(this.products))
     },
 
     addProduct(product) {
-        this.products.push(product);
-        this.saveProducts();
+        this.products.push(product)
+        this.saveProducts()
     },
 
     updateProduct(product) {
-        const index = this.products.findIndex(p => p.id === product.id);
+        const index = this.products.findIndex(p => p.id === product.id)
         if (index !== -1) {
-            this.products[index] = product;
-            this.saveProducts();
+            this.products[index] = product
+            this.saveProducts()
         }
     },
 
     deleteProduct(id) {
-        this.products = this.products.filter(p => p.id !== id);
-        this.saveProducts();
+        this.products = this.products.filter(p => p.id !== id)
+        this.saveProducts()
     },
 
-    // Post Actions
+    savePosts() {
+        localStorage.setItem('posts', JSON.stringify(this.posts))
+    },
+
     addPost(post) {
-        this.posts.unshift(post);
-        this.savePosts();
+        this.posts.unshift(post)
+        this.savePosts()
     },
 
     approvePost(post) {
-        const p = this.posts.find(x => x.id === post.id);
+        const p = this.posts.find(x => x.id === post.id)
         if (p) {
-            p.status = 'approved';
-            this.savePosts();
+            p.status = 'approved'
+            this.savePosts()
         }
     },
 
     deletePost(id) {
-        this.posts = this.posts.filter(p => p.id !== id);
-        this.savePosts();
+        this.posts = this.posts.filter(p => p.id !== id)
+        this.savePosts()
     },
 
     addComment(post, comment) {
-        const p = this.posts.find(x => x.id === post.id);
+        const p = this.posts.find(x => x.id === post.id)
         if (p) {
-            if (!p.comments) p.comments = [];
-            p.comments.push(comment);
-            this.savePosts();
+            p.comments.push(comment)
+            this.savePosts()
         }
     }
 });
+
+watch(
+    () => store.cart,
+    value => {
+        localStorage.setItem('cart', JSON.stringify(value))
+    },
+    { deep: true }
+)
