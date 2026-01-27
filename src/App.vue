@@ -141,4 +141,10 @@ body {
 .popup-body input { width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; }
 .popup-body button { width: 100%; padding: 10px; background: black; color: white; border: none; cursor: pointer; }
 .small-link { display: block; text-align: center; margin-top: 15px; font-size: 0.9em; text-decoration: none; color: #666; }
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
 </style>
