@@ -1,6 +1,17 @@
 <template>
   <div class="home-view">
-    <h2 class="Roboto Flex mt-4">Khám phá các sáng tạo độc đáo của Louis Vuitton</h2>
+    <!-- Carousel -->
+    <div class="carousel mt-5">
+      <div class="slides" ref="slidesRef">
+        <div class="slide"><img src="https://vn.louisvuitton.com/content/dam/lv/online/picture/asiapacific/2025/Women_Prefall_Odyssey_DI3.jpg?wid=1440" alt="Slide 1"></div>
+        <div class="slide"><img src="https://vn.louisvuitton.com/images/is/poster-video/9ed6c1c6-12f9-4ad0-8c85-fa847897396e/y1aMJIjU6NScxl6mmMnXCMeD.jpg?wid=1440" alt="Slide 2"></div>
+        <div class="slide"><img src="https://media.houseandgarden.co.uk/photos/6596844963ef2cafeda7065c/16:9/w_2848,h_1602,c_limit/F5RPDR4akAAlwyi.jpeg" alt="Slide 3"></div>
+      </div>
+      <button @click="moveSlide(-1)">❮</button>
+      <button @click="moveSlide(1)">❯</button>
+    </div>
+
+    <h2 class="Roboto Flex mt-4 text-center">Khám phá các sáng tạo độc đáo của Louis Vuitton</h2>
 
     <div class="category-grid">
       <div class="category" v-for="cat in categories" :key="cat.name">
@@ -24,16 +35,7 @@
       </div>
     </div>
 
-    <!-- Carousel -->
-    <div class="carousel mt-5">
-      <div class="slides" ref="slidesRef">
-        <div class="slide"><img src="https://vn.louisvuitton.com/content/dam/lv/online/picture/asiapacific/2025/Women_Prefall_Odyssey_DI3.jpg?wid=1440" alt="Slide 1"></div>
-        <div class="slide"><img src="https://vn.louisvuitton.com/images/is/poster-video/9ed6c1c6-12f9-4ad0-8c85-fa847897396e/y1aMJIjU6NScxl6mmMnXCMeD.jpg?wid=1440" alt="Slide 2"></div>
-        <div class="slide"><img src="https://media.houseandgarden.co.uk/photos/6596844963ef2cafeda7065c/16:9/w_2848,h_1602,c_limit/F5RPDR4akAAlwyi.jpeg" alt="Slide 3"></div>
-      </div>
-      <button @click="moveSlide(-1)">❮</button>
-      <button @click="moveSlide(1)">❯</button>
-    </div>
+
 
     <section class="stores mt-5">
       <h2>Cửa hàng</h2>
