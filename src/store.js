@@ -104,14 +104,35 @@ export const store = reactive({
         localStorage.setItem('profile', JSON.stringify(this.profile))
     },
 
+    notification: {
+        show: false,
+        message: '',
+        type: 'success'
+    },
+
+    showNotification(message, type = 'success') {
+        this.notification.message = message;
+        this.notification.type = type;
+        this.notification.show = true;
+        setTimeout(() => {
+            this.notification.show = false;
+        }, 3000);
+    },
+
     addToCart(product) {
         this.cart.push(product)
         localStorage.setItem('cart', JSON.stringify(this.cart))
+        this.showNotification(`Đã thêm "${product.name}" vào giỏ hàng!`);
     },
 
     removeFromCart(index) {
         this.cart.splice(index, 1)
         localStorage.setItem('cart', JSON.stringify(this.cart))
+    },
+
+    clearCart() {
+        this.cart = []
+        localStorage.setItem('cart', JSON.stringify([]))
     },
 
     saveProducts() {

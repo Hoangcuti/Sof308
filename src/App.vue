@@ -4,6 +4,7 @@ import { useRouter } from 'vue-router';
 import { store } from './store';
 import AppHeader from './components/AppHeader.vue';
 import AppFooter from './components/AppFooter.vue';
+import NotificationToast from './components/NotificationToast.vue';
 
 const router = useRouter();
 
@@ -70,6 +71,8 @@ const cartCount = computed(() => store.cart.length);
     />
     
     <router-view />
+
+    <NotificationToast />
     
     <AppFooter />
     
