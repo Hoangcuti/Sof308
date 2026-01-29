@@ -1,113 +1,36 @@
 import { reactive, watch } from 'vue'
+import axios from 'axios'
 
-/* ================= LOAD LOCALSTORAGE ================= */
-const cartData = JSON.parse(localStorage.getItem('cart')) || []
-const usersData = JSON.parse(localStorage.getItem('users')) || []
-const currentUserData = JSON.parse(localStorage.getItem('currentUser')) || null
-const productsData = JSON.parse(localStorage.getItem('products')) || [
-    // Home / T-Shirts (Featured)
-    { id: 1, name: 'Áo Thun', image: 'https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-embroidered-signature-t-shirt--HTY21WNPG900_PM2_Front%20view.png?wid=730&hei=730', price: '99.000.000 ₫', category: 'featured' },
-    { id: 2, name: 'Phụ Kiện Treo Túi LV Shell', image: 'https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-lv-shell-bag-charm--M02620_PM2_Front%20view.png?wid=730&hei=730', price: '99.000.000 ₫', category: 'featured' },
-    { id: 3, name: 'Túi Speedy Bandoulière 30', image: 'https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-speedy-30-bandouliere--M14457_PM2_Front%20view.png?wid=730&hei=730', price: '99.000.000 ₫', category: 'featured' },
-    { id: 4, name: 'Giày Thể Thao LV Footprint Soccer', image: 'https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-lv-footprint-soccer--BTU00ZSC20_PM2_Front%20view.png?wid=730&hei=730', price: '99.000.000 ₫', category: 'featured' },
-
-    // Túi Xách (tuixach)
-    { id: 11, name: 'Túi Hills Pochette', image: 'https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-hills-pochette--M14304_PM2_Front%20view.png?wid=490&hei=490', price: '51.500.000 ₫', category: 'tuixach' },
-    { id: 12, name: 'Túi Vanity Chain Pouch', image: 'https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-vanity-chain-pouch--M14303_PM2_Front%20view.png?wid=730&hei=730', price: '65.500.000 ₫', category: 'tuixach' },
-    { id: 13, name: 'Túi OnTheGo MM', image: 'https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-tui-onthego-mm--M13189_PM2_Front%20view.png?wid=490&hei=490', price: '93.500.000 ₫', category: 'tuixach' },
-    { id: 14, name: 'Túi Neverfull MM', image: 'https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-lock-and-walk--M24638_PM2_Front%20view.png?wid=490&hei=490', price: '78.000.000 ₫', category: 'tuixach' },
-    { id: 15, name: 'Túi Pochette Metis', image: 'https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-pochette-metis--M45923_PM2_Front%20view.png?wid=490&hei=490', price: '85.000.000 ₫', category: 'tuixach' },
-    { id: 16, name: 'Túi Speedy Bandoulière 25', image: 'https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-speedy-bandouliere-25--M41526_PM2_Front%20view.png?wid=490&hei=490', price: '62.500.000 ₫', category: 'tuixach' },
-    { id: 17, name: 'Túi Néonoé BB', image: 'https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-neonoe-bb--M46581_PM2_Front%20view.png?wid=730&hei=730', price: '55.500.000 ₫', category: 'tuixach' },
-    { id: 18, name: 'Túi Hide Away MM', image: 'https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-hide-away-mm--M14473_PM2_Front%20view.png?wid=730&hei=730', price: '120.000.000 ₫', category: 'tuixach' },
-    { id: 19, name: 'Túi Pochette Camille', image: 'https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-pochette-camille--M13566_PM2_Front%20view.png?wid=730&hei=730', price: '40.500.000 ₫', category: 'tuixach' },
-    { id: 20, name: 'Túi Noé BB', image: 'https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-noe-bb--M40818_PM2_Front%20view.png?wid=490&hei=490', price: '75.000.000 ₫', category: 'tuixach' },
-    { id: 21, name: 'Túi Pochette Accessoires', image: 'https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-pochette-accessoires--M82766_PM2_Front%20view.png?wid=730&hei=730', price: '41.500.000 ₫', category: 'tuixach' },
-    { id: 22, name: 'Túi Speedy Soft 30 Dark', image: 'https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-speedy-soft-30-dark--M12243_PM2_Front%20view.png?wid=730&hei=730', price: '87.000.000 ₫', category: 'tuixach' },
-
-    // Giày (giaydep)
-    { id: 31, name: 'Giày Thể Thao LV Trainer', image: 'https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-giay-the-thao-lv-trainer--BM9U5PMI02_PM2_Front%20view.png?wid=490&hei=490', price: '35.000.000 ₫', category: 'giaydep' },
-    { id: 32, name: 'Giày Thể Thao LV Trainer (Đen)', image: 'https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-giay-the-thao-lv-trainer--BM9U5PMI54_PM2_Front%20view.png?wid=490&hei=490', price: '35.000.000 ₫', category: 'giaydep' },
-    { id: 33, name: 'Giày Thể Thao LV Trainer (Xám)', image: 'https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-lv-trainer-sneaker--BSUPMUGC01_PM2_Front%20view.png?wid=490&hei=490', price: '35.000.000 ₫', category: 'giaydep' },
-    { id: 34, name: 'Giày Thể Thao LV Classic', image: 'https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-lv-trainer-sneaker--BTU015NU20_PM2_Front%20view.png?wid=730&hei=730', price: '30.500.000 ₫', category: 'giaydep' },
-
-    // Mũ (mu)
-    { id: 41, name: 'Mũ Lưỡi Trai Signature', image: 'https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-signature-cap--M5149L_PM2_Front%20view.png?wid=730&hei=730', price: '15.100.000 ₫', category: 'mu' },
-    { id: 42, name: 'Mũ Lưỡi Trai Only LV', image: 'https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-only-lv-cap--M7956L_PM2_Front%20view.png?wid=730&hei=730', price: '12.900.000 ₫', category: 'mu' },
-    { id: 43, name: 'Mũ Lưỡi Trai Họa Tiết Monogram', image: 'https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-monogram-essential-cap--M76584_PM2_Front%20view.png?wid=730&hei=730', price: '20.200.000 ₫', category: 'mu' },
-    { id: 44, name: 'Mũ LV Smash', image: 'https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-lv-smash-rain-cap--M7714M_PM2_Front%20view.png?wid=730&hei=730', price: '15.100.000 ₫', category: 'mu' },
-
-    // Thắt lưng (thatluong)
-    { id: 51, name: 'Thắt Lưng Hai Mặt LV Flower 40MM', image: 'https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-lv-flower-40mm-reversible-belt--M4253U_PM2_Front%20view.png?wid=730&hei=730', price: '19.400.000 ₫', category: 'thatluong' },
-    { id: 52, name: 'Thắt Lưng Hai Mặt LV Dimension 30MM', image: 'https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-lv-dimension-30mm-reversible-belt--M4049U_PM2_Front%20view.png?wid=1440&hei=1440', price: '15.700.000 ₫', category: 'thatluong' },
-    { id: 53, name: 'Thắt Lưng Hai Mặt LV Dimension 30MM (Vàng)', image: 'https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-lv-dimension-30mm-reversible-belt--M4048U_PM2_Front%20view.png?wid=600&hei=600', price: '15.700.000 ₫', category: 'thatluong' },
-    { id: 54, name: 'Thắt Lưng Hai Mặt LV Dimension Gradient 40MM', image: 'https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-lv-dimension-gradient-40mm-reversible-belt--M4068T_PM2_Front%20view.png?wid=600&hei=600', price: '18.300.000 ₫', category: 'thatluong' },
-];
+const API_URL = 'http://localhost:3000'
 
 export const store = reactive({
-    cart: cartData,
-    currentUser: currentUserData,
-    isLoggedIn: !!currentUserData,
-    users: usersData,
-    products: productsData,
-    posts: JSON.parse(localStorage.getItem('posts')) || [
-        { id: 1, title: 'Bộ sưu tập Mùa Thu 2025', content: 'Khám phá những mẫu thiết kế mới nhất vừa ra mắt...', author: 'Admin', date: '2025-01-15', image: 'https://vn.louisvuitton.com/content/dam/lv/online/picture/asiapacific/2025/Women_Prefall_Odyssey_DI3.jpg?wid=600', comments: [], showComments: false, newCommentText: '', status: 'approved' },
-        { id: 2, title: 'Phong cách doanh nhân', content: 'Lựa chọn trang phục phù hợp cho các quý ông...', author: 'Admin', date: '2025-01-16', image: '', comments: [], showComments: false, newCommentText: '', status: 'approved' }
-    ],
-
-    register(user) {
-        this.users.push(user)
-        localStorage.setItem('users', JSON.stringify(this.users))
-
-        this.currentUser = user
-        this.isLoggedIn = true
-        localStorage.setItem('currentUser', JSON.stringify(user))
-
-        this.profile = {
-            bio: '',
-            gender: '',
-            birthDate: '',
-            personalInfo: ''
-        }
-        localStorage.setItem('profile', JSON.stringify(this.profile))
-    },
-
-    login(user) {
-        this.currentUser = user
-        this.isLoggedIn = true
-        localStorage.setItem('currentUser', JSON.stringify(user))
-
-        const savedProfile = JSON.parse(localStorage.getItem('profile'))
-        this.profile = savedProfile || {
-            bio: '',
-            gender: '',
-            birthDate: '',
-            personalInfo: ''
-        }
-    },
-
-    logout() {
-        this.currentUser = null
-        this.isLoggedIn = false
-        this.profile = {
-            bio: '',
-            gender: '',
-            birthDate: '',
-            personalInfo: ''
-        }
-        localStorage.removeItem('currentUser')
-        localStorage.removeItem('profile')
-    },
-
-    updateProfile(data) {
-        this.profile = { ...this.profile, ...data }
-        localStorage.setItem('profile', JSON.stringify(this.profile))
-    },
+    cart: JSON.parse(localStorage.getItem('cart')) || [],
+    currentUser: JSON.parse(localStorage.getItem('currentUser')) || null,
+    isLoggedIn: !!JSON.parse(localStorage.getItem('currentUser')),
+    users: [],
+    products: [],
+    posts: [],
 
     notification: {
         show: false,
         message: '',
         type: 'success'
+    },
+
+    // Initial data fetch
+    async init() {
+        try {
+            const [prodRes, postRes, userRes] = await Promise.all([
+                axios.get(`${API_URL}/products`),
+                axios.get(`${API_URL}/posts`),
+                axios.get(`${API_URL}/users`)
+            ])
+            this.products = prodRes.data
+            this.posts = postRes.data
+            this.users = userRes.data
+        } catch (error) {
+            console.error('Lỗi khi tải dữ liệu từ server:', error)
+        }
     },
 
     showNotification(message, type = 'success') {
@@ -119,75 +42,145 @@ export const store = reactive({
         }, 3000);
     },
 
+    // --- AUTH ---
+    async register(userData) {
+        try {
+            const res = await axios.post(`${API_URL}/users`, {
+                ...userData,
+                id: Date.now()
+            })
+            const newUser = res.data
+            this.users.push(newUser)
+            this.login(newUser)
+            return newUser
+        } catch (error) {
+            console.error('Lỗi đăng ký:', error)
+            throw error
+        }
+    },
+
+    login(user) {
+        this.currentUser = user
+        this.isLoggedIn = true
+        localStorage.setItem('currentUser', JSON.stringify(user))
+    },
+
+    logout() {
+        this.currentUser = null
+        this.isLoggedIn = false
+        localStorage.removeItem('currentUser')
+    },
+
+    async updateUser(updatedData) {
+        try {
+            const res = await axios.patch(`${API_URL}/users/${this.currentUser.id}`, updatedData)
+            this.currentUser = { ...this.currentUser, ...res.data }
+            localStorage.setItem('currentUser', JSON.stringify(this.currentUser))
+
+            // Sync users list
+            const index = this.users.findIndex(u => u.id === this.currentUser.id)
+            if (index !== -1) this.users[index] = this.currentUser
+
+            this.showNotification('Cập nhật thông tin thành công!')
+        } catch (error) {
+            console.error('Lỗi cập nhật user:', error)
+            throw error
+        }
+    },
+
+    // --- PRODUCTS ---
+    async addProduct(product) {
+        try {
+            const res = await axios.post(`${API_URL}/products`, product)
+            this.products.push(res.data)
+            this.showNotification('Thêm sản phẩm thành công!')
+        } catch (error) {
+            console.error('Lỗi thêm sản phẩm:', error)
+        }
+    },
+
+    async updateProduct(product) {
+        try {
+            const res = await axios.put(`${API_URL}/products/${product.id}`, product)
+            const index = this.products.findIndex(p => p.id === product.id)
+            if (index !== -1) this.products[index] = res.data
+            this.showNotification('Cập nhật sản phẩm thành công!')
+        } catch (error) {
+            console.error('Lỗi cập nhật sản phẩm:', error)
+        }
+    },
+
+    async deleteProduct(id) {
+        try {
+            await axios.delete(`${API_URL}/products/${id}`)
+            this.products = this.products.filter(p => p.id !== id)
+            this.showNotification('Đã xóa sản phẩm!')
+        } catch (error) {
+            console.error('Lỗi xóa sản phẩm:', error)
+        }
+    },
+
+    // --- POSTS ---
+    async addPost(post) {
+        try {
+            const res = await axios.post(`${API_URL}/posts`, post)
+            this.posts.unshift(res.data)
+            this.showNotification('Đã đăng bài viết! Chờ duyệt.')
+        } catch (error) {
+            console.error('Lỗi thêm bài viết:', error)
+        }
+    },
+
+    async approvePost(post) {
+        try {
+            const res = await axios.patch(`${API_URL}/posts/${post.id}`, { status: 'approved' })
+            const p = this.posts.find(x => x.id === post.id)
+            if (p) {
+                p.status = 'approved'
+                this.showNotification('Đã duyệt bài viết!')
+            }
+        } catch (error) {
+            console.error('Lỗi duyệt bài:', error)
+        }
+    },
+
+    async deletePost(id) {
+        try {
+            await axios.delete(`${API_URL}/posts/${id}`)
+            this.posts = this.posts.filter(p => p.id !== id)
+            this.showNotification('Đã xóa bài viết!')
+        } catch (error) {
+            console.error('Lỗi xóa bài:', error)
+        }
+    },
+
+    async addComment(post, comment) {
+        try {
+            const updatedComments = [...post.comments, comment]
+            const res = await axios.patch(`${API_URL}/posts/${post.id}`, { comments: updatedComments })
+            const p = this.posts.find(x => x.id === post.id)
+            if (p) p.comments = res.data.comments
+        } catch (error) {
+            console.error('Lỗi thêm bình luận:', error)
+        }
+    },
+
+    // --- CART ---
     addToCart(product) {
         this.cart.push(product)
-        localStorage.setItem('cart', JSON.stringify(this.cart))
         this.showNotification(`Đã thêm "${product.name}" vào giỏ hàng!`);
     },
 
     removeFromCart(index) {
         this.cart.splice(index, 1)
-        localStorage.setItem('cart', JSON.stringify(this.cart))
     },
 
     clearCart() {
         this.cart = []
-        localStorage.setItem('cart', JSON.stringify([]))
-    },
-
-    saveProducts() {
-        localStorage.setItem('products', JSON.stringify(this.products))
-    },
-
-    addProduct(product) {
-        this.products.push(product)
-        this.saveProducts()
-    },
-
-    updateProduct(product) {
-        const index = this.products.findIndex(p => p.id === product.id)
-        if (index !== -1) {
-            this.products[index] = product
-            this.saveProducts()
-        }
-    },
-
-    deleteProduct(id) {
-        this.products = this.products.filter(p => p.id !== id)
-        this.saveProducts()
-    },
-
-    savePosts() {
-        localStorage.setItem('posts', JSON.stringify(this.posts))
-    },
-
-    addPost(post) {
-        this.posts.unshift(post)
-        this.savePosts()
-    },
-
-    approvePost(post) {
-        const p = this.posts.find(x => x.id === post.id)
-        if (p) {
-            p.status = 'approved'
-            this.savePosts()
-        }
-    },
-
-    deletePost(id) {
-        this.posts = this.posts.filter(p => p.id !== id)
-        this.savePosts()
-    },
-
-    addComment(post, comment) {
-        const p = this.posts.find(x => x.id === post.id)
-        if (p) {
-            p.comments.push(comment)
-            this.savePosts()
-        }
     }
 });
 
+// Sync cart to localStorage
 watch(
     () => store.cart,
     value => {

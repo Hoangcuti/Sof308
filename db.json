@@ -1,0 +1,126 @@
+{
+    "users": [
+        {
+            "id": 1,
+            "username": "admin",
+            "password": "123",
+            "role": "admin",
+            "name": "Quản trị viên",
+            "email": "admin@example.com",
+            "phone": "0123456789",
+            "profile": {
+                "bio": "Hệ thống quản trị",
+                "gender": "Khác",
+                "birthday": "2025-01-01"
+            }
+        }
+    ],
+    "products": [
+        {
+            "id": 1,
+            "name": "Áo Thun",
+            "image": "https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-embroidered-signature-t-shirt--HTY21WNPG900_PM2_Front%20view.png?wid=730&hei=730",
+            "price": "19.000.000 ₫",
+            "category": "featured"
+        },
+        {
+            "id": 2,
+            "name": "Phụ Kiện Treo Túi LV Shell",
+            "image": "https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-lv-shell-bag-charm--M02620_PM2_Front%20view.png?wid=730&hei=730",
+            "price": "22.500.000 ₫",
+            "category": "featured"
+        },
+        {
+            "id": 3,
+            "name": "Túi Speedy Bandoulière 30",
+            "image": "https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-speedy-30-bandouliere--M14457_PM2_Front%20view.png?wid=730&hei=730",
+            "price": "61.500.000 ₫",
+            "category": "featured"
+        },
+        {
+            "id": 4,
+            "name": "Giày Thể Thao LV Footprint Soccer",
+            "image": "https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-lv-footprint-soccer--BTU00ZSC20_PM2_Front%20view.png?wid=730&hei=730",
+            "price": "35.500.000 ₫",
+            "category": "featured"
+        },
+        {
+            "id": 11,
+            "name": "Túi Hills Pochette",
+            "image": "https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-hills-pochette--M14304_PM2_Front%20view.png?wid=490&hei=490",
+            "price": "51.500.000 ₫",
+            "category": "tuixach"
+        },
+        {
+            "id": 12,
+            "name": "Túi Vanity Chain Pouch",
+            "image": "https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-vanity-chain-pouch--M14303_PM2_Front%20view.png?wid=730&hei=730",
+            "price": "65.500.000 ₫",
+            "category": "tuixach"
+        },
+        {
+            "id": 13,
+            "name": "Túi OnTheGo MM",
+            "image": "https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-tui-onthego-mm--M13189_PM2_Front%20view.png?wid=490&hei=490",
+            "price": "93.500.000 ₫",
+            "category": "tuixach"
+        },
+        {
+            "id": 14,
+            "name": "Túi Neverfull MM",
+            "image": "https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-lock-and-walk--M24638_PM2_Front%20view.png?wid=490&hei=490",
+            "price": "78.000.000 ₫",
+            "category": "tuixach"
+        },
+        {
+            "id": 31,
+            "name": "Giày Thể Thao LV Trainer",
+            "image": "https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-giay-the-thao-lv-trainer--BM9U5PMI02_PM2_Front%20view.png?wid=490&hei=490",
+            "price": "35.000.000 ₫",
+            "category": "giaydep"
+        },
+        {
+            "id": 32,
+            "name": "Giày Thể Thao LV Trainer (Đen)",
+            "image": "https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-giay-the-thao-lv-trainer--BM9U5PMI54_PM2_Front%20view.png?wid=490&hei=490",
+            "price": "35.000.000 ₫",
+            "category": "giaydep"
+        },
+        {
+            "id": 41,
+            "name": "Mũ Lưỡi Trai Signature",
+            "image": "https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-signature-cap--M5149L_PM2_Front%20view.png?wid=730&hei=730",
+            "price": "15.100.000 ₫",
+            "category": "mu"
+        },
+        {
+            "id": 51,
+            "name": "Thắt Lưng Hai Mặt LV Flower 40MM",
+            "image": "https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-lv-flower-40mm-reversible-belt--M4253U_PM2_Front%20view.png?wid=730&hei=730",
+            "price": "19.400.000 ₫",
+            "category": "thatluong"
+        }
+    ],
+    "posts": [
+        {
+            "id": 1,
+            "title": "Bộ sưu tập Mùa Thu 2025",
+            "content": "Khám phá những mẫu thiết kế mới nhất vừa ra mắt...",
+            "author": "Admin",
+            "date": "2025-01-15",
+            "image": "https://vn.louisvuitton.com/content/dam/lv/online/picture/asiapacific/2025/Women_Prefall_Odyssey_DI3.jpg?wid=600",
+            "comments": [],
+            "status": "approved"
+        },
+        {
+            "id": 2,
+            "title": "Phong cách doanh nhân",
+            "content": "Lựa chọn trang phục phù hợp cho các quý ông...",
+            "author": "Admin",
+            "date": "2025-01-16",
+            "image": "",
+            "comments": [],
+            "status": "approved"
+        }
+    ]
+}

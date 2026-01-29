@@ -50,7 +50,7 @@
 
 <script setup>
 import { reactive } from 'vue'
-import { store } from '@/store'
+import { store } from '../store.js'
 
 const form = reactive({
   username: '',
@@ -61,16 +61,31 @@ const form = reactive({
   confirm: ''
 })
 
-const handleRegister = () => {
+const handleRegister = async () => {
   if (
     !form.username ||
     !form.name ||
     !form.email ||
     !form.phone ||
-    !form.password
+    !form.password ||
+    !form.confirm
   ) {
-    alert('Vui lòng nhập đầy đủ thông tin')
+    alert('Vui lòng nhập đầy đủ tất cả các trường')
     return
+  }
+
+  // Email validation
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(form.email)) {
+    alert('Định dạng email không hợp lệ');
+    return;
+  }
+
+  // Phone validation
+  const phoneRegex = /^[0-9]{10,11}$/;
+  if (!phoneRegex.test(form.phone)) {
+    alert('Số điện thoại phải có 10-11 chữ số');
+    return;
   }
 
   if (form.password !== form.confirm) {
@@ -78,15 +93,35 @@ const handleRegister = () => {
     return
   }
 
-  store.register({
-    username: form.username,
-    password: form.password,
-    profile: {
+  // Check if user exists
+  if (store.users.find(u => u.username === form.username)) {
+    alert('Tên đăng nhập đã tồn tại')
+    return
+  }
+
+  try {
+    await store.register({
+      username: form.username,
+      password: form.password,
+      role: 'user',
       name: form.name,
       email: form.email,
-      phone: form.phone
-    }
-  })
+      phone: form.phone,
+      profile: {
+        name: form.name,
+        email: form.email,
+        phone: form.phone,
+        bio: '',
+        gender: '',
+        birthday: ''
+      }
+    })
+
+    alert('Đăng ký thành công!')
+    // Switch to login or redirect
+  } catch (error) {
+    alert('Đăng ký thất bại. Vui lòng thử lại.')
+  }
 }
 </script>
 
