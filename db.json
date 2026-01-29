@@ -1,0 +1,202 @@
+{
+    "users": [
+        {
+            "id": 1,
+            "username": "admin",
+            "password": "123",
+            "role": "admin",
+            "name": "Quản trị viên",
+            "email": "admin@example.com",
+            "phone": "0123456789",
+            "profile": {
+                "bio": "Hệ thống quản trị",
+                "gender": "Khác",
+                "birthday": "2025-01-01"
+            }
+        }
+    ],
+    "products": [
+        {
+            "id": 1,
+            "name": "Áo Thun Embroidered Signature",
+            "image": "https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-embroidered-signature-t-shirt--HTY21WNPG900_PM2_Front%20view.png?wid=730&hei=730",
+            "price": "19.000.000 ₫",
+            "category": "featured",
+            "description": "Chiếc áo thun cotton dáng rộng này mang đến vẻ đẹp giản dị mà tinh tế. Logo Louis Vuitton thêu nổi bật trên ngực trái khẳng định đẳng cấp thương hiệu. Chất liệu vải mềm mại, thoáng mát, phù hợp cho cả ngày dài năng động.",
+            "colors": ["Trắng", "Đen", "Xám"],
+            "sizes": ["S", "M", "L", "XL"],
+            "images": [
+                "https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-embroidered-signature-t-shirt--HTY21WNPG900_PM2_Front%20view.png?wid=730&hei=730",
+                "https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-embroidered-signature-t-shirt--HTY21WNPG900_PM1_Back%20view.png?wid=730&hei=730"
+            ]
+        },
+        {
+            "id": 2,
+            "name": "Phụ Kiện Treo Túi LV Shell",
+            "image": "https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-lv-shell-bag-charm--M02620_PM2_Front%20view.png?wid=730&hei=730",
+            "price": "22.500.000 ₫",
+            "category": "featured",
+            "description": "Lấy cảm hứng từ vẻ đẹp của đại dương, phụ kiện treo túi LV Shell là điểm nhấn hoàn hảo cho chiếc túi xách của bạn. Được chế tác tỉ mỉ từ kim loại mạ vàng sáng bóng và men màu tinh xảo.",
+            "colors": ["Vàng", "Bạc"],
+            "sizes": ["One Size"],
+            "images": [
+                "https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-lv-shell-bag-charm--M02620_PM2_Front%20view.png?wid=730&hei=730",
+                "https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-lv-shell-bag-charm--M02620_PM1_Detail%20view.png?wid=730&hei=730"
+            ]
+        },
+        {
+            "id": 3,
+            "name": "Túi Speedy Bandoulière 30",
+            "image": "https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-speedy-30-bandouliere--M14457_PM2_Front%20view.png?wid=730&hei=730",
+            "price": "61.500.000 ₫",
+            "category": "featured",
+            "description": "Biểu tượng của sự thanh lịch hiện đại, túi Speedy Bandoulière 30 được làm từ chất liệu canvas Monogram kinh điển. Túi có dây đeo vai có thể tháo rời, cho phép bạn biến tấu phong cách linh hoạt.",
+            "colors": ["Nâu Monogram"],
+            "sizes": ["30 x 21 x 17 cm"],
+            "images": [
+                "https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-speedy-30-bandouliere--M14457_PM2_Front%20view.png?wid=730&hei=730",
+                "https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-speedy-30-bandouliere--M14457_PM1_Side%20view.png?wid=730&hei=730"
+            ]
+        },
+        {
+            "id": 4,
+            "name": "Giày Thể Thao LV Footprint Soccer",
+            "image": "https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-lv-footprint-soccer--BTU00ZSC20_PM2_Front%20view.png?wid=730&hei=730",
+            "price": "35.500.000 ₫",
+            "category": "featured",
+            "description": "Sự kết hợp táo bạo giữa phong cách bóng đá và thời trang đường phố cao cấp. Đế giày được thiết kế độc đáo với họa tiết dấu chân, mang lại độ bám tốt và vẻ ngoài cá tính.",
+            "colors": ["Đen", "Trắng"],
+            "sizes": ["39", "40", "41", "42", "43"],
+            "images": [
+                "https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-lv-footprint-soccer--BTU00ZSC20_PM2_Front%20view.png?wid=730&hei=730",
+                "https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-lv-footprint-soccer--BTU00ZSC20_PM1_Side%20view.png?wid=730&hei=730"
+            ]
+        },
+        {
+            "id": 11,
+            "name": "Túi Hills Pochette",
+            "image": "https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-hills-pochette--M14304_PM2_Front%20view.png?wid=490&hei=490",
+            "price": "51.500.000 ₫",
+            "category": "tuixach",
+            "description": "Túi Hills Pochette nhỏ gọn nhưng đầy sức hút, phù hợp cho những buổi tiệc tối hay dạo phố. Thiết kế tối giản làm nổi bật chất liệu da cao cấp.",
+            "colors": ["Hồng", "Đen"],
+            "sizes": ["M"],
+            "images": [
+                "https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-hills-pochette--M14304_PM2_Front%20view.png?wid=490&hei=490"
+            ]
+        },
+        {
+            "id": 12,
+            "name": "Túi Vanity Chain Pouch",
+            "image": "https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-vanity-chain-pouch--M14303_PM2_Front%20view.png?wid=730&hei=730",
+            "price": "65.500.000 ₫",
+            "category": "tuixach",
+            "description": "Một tuyệt phẩm thủ công, Vanity Chain Pouch gợi nhớ đến những chiếc hộp đựng đồ trang điểm cổ điển. Vẻ đẹp sang trọng vượt thời gian.",
+            "colors": ["Nâu Monogram"],
+            "sizes": ["S"],
+            "images": [
+                "https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-vanity-chain-pouch--M14303_PM2_Front%20view.png?wid=730&hei=730"
+            ]
+        },
+        {
+            "id": 13,
+            "name": "Túi OnTheGo MM",
+            "image": "https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-tui-onthego-mm--M13189_PM2_Front%20view.png?wid=490&hei=490",
+            "price": "93.500.000 ₫",
+            "category": "tuixach",
+            "description": "Đúng như tên gọi, OnTheGo MM là người bạn đồng hành lý tưởng cho cuộc sống bận rộn. Không gian rộng rãi chứa được laptop và nhiều vật dụng cá nhân.",
+            "colors": ["Be", "Nâu"],
+            "sizes": ["MM"],
+            "images": [
+                "https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-tui-onthego-mm--M13189_PM2_Front%20view.png?wid=490&hei=490"
+            ]
+        },
+        {
+            "id": 14,
+            "name": "Túi Neverfull MM",
+            "image": "https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-lock-and-walk--M24638_PM2_Front%20view.png?wid=490&hei=490",
+            "price": "78.000.000 ₫",
+            "category": "tuixach",
+            "description": "Neverfull MM huyền thoại - chiếc túi tote không bao giờ đầy. Thiết kế linh hoạt với dây rút hai bên để điều chỉnh kiểu dáng.",
+            "colors": ["Đen", "Kem"],
+            "sizes": ["MM"],
+            "images": [
+                "https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-lock-and-walk--M24638_PM2_Front%20view.png?wid=490&hei=490"
+            ]
+        },
+        {
+            "id": 31,
+            "name": "Giày Thể Thao LV Trainer",
+            "image": "https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-giay-the-thao-lv-trainer--BM9U5PMI02_PM2_Front%20view.png?wid=490&hei=490",
+            "price": "35.000.000 ₫",
+            "category": "giaydep",
+            "description": "Thiết kế bởi Virgil Abloh, LV Trainer mang đậm hơi thở bóng rổ thập niên 90. Mỗi đôi giày mất 7 giờ để khâu tay tỉ mỉ.",
+            "colors": ["Trắng xanh"],
+            "sizes": ["39", "40", "41", "42"],
+            "images": [
+                "https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-giay-the-thao-lv-trainer--BM9U5PMI02_PM2_Front%20view.png?wid=490&hei=490"
+            ]
+        },
+        {
+            "id": 32,
+            "name": "Giày Thể Thao LV Trainer (Đen)",
+            "image": "https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-giay-the-thao-lv-trainer--BM9U5PMI54_PM2_Front%20view.png?wid=490&hei=490",
+            "price": "35.000.000 ₫",
+            "category": "giaydep",
+            "description": "Phiên bản màu đen huyền bí của dòng LV Trainer danh tiếng. Chất liệu da bê cao cấp với các chi tiết monogram dập nổi.",
+            "colors": ["Đen"],
+            "sizes": ["40", "41", "42"],
+            "images": [
+                "https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-giay-the-thao-lv-trainer--BM9U5PMI54_PM2_Front%20view.png?wid=490&hei=490"
+            ]
+        },
+        {
+            "id": 41,
+            "name": "Mũ Lưỡi Trai Signature",
+            "image": "https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-signature-cap--M5149L_PM2_Front%20view.png?wid=730&hei=730",
+            "price": "15.100.000 ₫",
+            "category": "mu",
+            "description": "Chiếc mũ lưỡi trai canvas cổ điển được nâng tầm với logo thêu tinh xảo. Phụ kiện không thể thiếu cho phong cách năng động.",
+            "colors": ["Xanh Denim"],
+            "sizes": ["One Size"],
+            "images": [
+                "https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-signature-cap--M5149L_PM2_Front%20view.png?wid=730&hei=730"
+            ]
+        },
+        {
+            "id": 51,
+            "name": "Thắt Lưng Hai Mặt LV Flower 40MM",
+            "image": "https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-lv-flower-40mm-reversible-belt--M4253U_PM2_Front%20view.png?wid=730&hei=730",
+            "price": "19.400.000 ₫",
+            "category": "thatluong",
+            "description": "Thắt lưng hai mặt với khóa LV Flower độc đáo. Một mặt là canvas Monogram, mặt còn lại là da trơn màu đen, dễ dàng phối hợp với nhiều trang phục.",
+            "colors": ["Nâu/Đen"],
+            "sizes": ["85", "90", "95", "100"],
+            "images": [
+                "https://vn.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-lv-flower-40mm-reversible-belt--M4253U_PM2_Front%20view.png?wid=730&hei=730"
+            ]
+        }
+    ],
+    "posts": [
+        {
+            "id": 1,
+            "title": "Bộ sưu tập Mùa Thu 2025",
+            "content": "Khám phá những mẫu thiết kế mới nhất vừa ra mắt...",
+            "author": "Admin",
+            "date": "2025-01-15",
+            "image": "https://vn.louisvuitton.com/content/dam/lv/online/picture/asiapacific/2025/Women_Prefall_Odyssey_DI3.jpg?wid=600",
+            "comments": [],
+            "status": "approved"
+        },
+        {
+            "id": 2,
+            "title": "Phong cách doanh nhân",
+            "content": "Lựa chọn trang phục phù hợp cho các quý ông...",
+            "author": "Admin",
+            "date": "2025-01-16",
+            "image": "",
+            "comments": [],
+            "status": "approved"
+        }
+    ]
+}

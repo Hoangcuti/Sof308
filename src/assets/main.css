@@ -1,0 +1,73 @@
+/* Global Styles Migrated from asm.css and sanpham.css */
+
+/* Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif:wdth,wght@75,147&family=Oswald:wght@200..700&family=Roboto+Flex:opsz,slnt,wdth,wght,GRAD,XOPQ,YTFI@8..144,-10..0,62.1,1000,-200..150,147,711&display=swap');
+
+body {
+  font-family: 'Oswald', sans-serif;
+  margin: 0;
+  padding: 0;
+  color: #303030;
+  background-color: #fff;
+}
+
+h1, h2, h3, .logo {
+  font-family: 'Noto Serif', serif;
+}
+
+p, span, div, input, button {
+  font-family: 'Oswald', sans-serif;
+}
+
+/* Common UI Elements */
+.click-icon {
+  color: #e60023; /* Primary Brand Color */
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: color 0.3s;
+}
+
+a:hover {
+  color: #e60023;
+}
+
+/* Toast Notification (if used globally) */
+#toast {
+  visibility: hidden;
+  min-width: 250px;
+  background-color: #e60023;
+  color: white;
+  text-align: center;
+  border-radius: 4px;
+  padding: 16px;
+  position: fixed;
+  z-index: 10000;
+  right: 20px;
+  bottom: 30px;
+  font-size: 16px;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+#toast.show {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Scrollbar styling for a premium feel could be added here */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
