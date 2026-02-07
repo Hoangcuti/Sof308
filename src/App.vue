@@ -119,6 +119,28 @@ const handleRegister = async () => {
 }
 
 const cartCount = computed(() => store.cart.length);
+
+// Listen for messages from the login popup
+window.addEventListener('message', (event) => {
+    if (event.data.type === 'SOCIAL_LOGIN_SUCCESS') {
+        store.loginWithSocial(event.data.platform, event.data.user);
+        showLoginModal.value = false;
+    }
+});
+
+const handleSocialLogin = (platform) => {
+    // Open a popup window instead of instant login
+    const width = 500;
+    const height = 600;
+    const left = (window.screen.width / 2) - (width / 2);
+    const top = (window.screen.height / 2) - (height / 2);
+    
+    window.open(
+        '/social-login.html', 
+        'Social Login', 
+        `width=${width},height=${height},left=${left},top=${top}`
+    );
+};
 </script>
 
 <template>
@@ -152,7 +174,19 @@ const cartCount = computed(() => store.cart.length);
               <input :type="showPass ? 'text' : 'password'" v-model="loginData.password" placeholder="Mật khẩu" required />
               <span class="toggle-password" @click="showPass = !showPass">👁️</span>
             </div>
-            <button type="submit">Đăng nhập</button>
+            <button type="submit" class="btn-premium btn-premium-dark">Đăng nhập</button>
+            
+            <div class="social-login text-center" style="margin-top: 15px;">
+              <p class="text-muted small mb-2" style="font-size: 0.8em; color: #888;">Hoặc đăng nhập bằng</p>
+              <div style="display: flex; gap: 10px;">
+                <button type="button" class="btn-premium" @click="handleSocialLogin('google')" style="background: #df4b38; color: white; flex: 1; padding: 10px; font-size: 0.9em; border: none !important;">
+                   Google
+                </button>
+                <button type="button" class="btn-premium" @click="handleSocialLogin('facebook')" style="background: #3b5998; color: white; flex: 1; padding: 10px; font-size: 0.9em; border: none !important;">
+                   Facebook
+                </button>
+              </div>
+            </div>
           </form>
           <a href="#" class="small-link" @click="activeForm = 'register'">Chưa có tài khoản? Đăng ký</a>
         </div>
@@ -170,7 +204,7 @@ const cartCount = computed(() => store.cart.length);
              <div class="password-container">
               <input type="password" v-model="registerData.confirmPassword" placeholder="Xác nhận mật khẩu" required />
             </div>
-            <button type="submit">Đăng ký</button>
+            <button type="submit" class="btn-premium btn-premium-dark">Đăng ký</button>
           </form>
           <a href="#" class="small-link" @click="activeForm = 'login'">Đã có tài khoản? Đăng nhập</a>
         </div>
@@ -217,5 +251,10 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  margin: 0 auto;
+}
+
+main {
+    flex: 1;
 }
 </style>

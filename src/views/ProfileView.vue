@@ -62,6 +62,49 @@
           <span v-else>Đang lưu...</span>
         </button>
       </div>
+
+      <!-- Order History -->
+      <section class="profile-section mt-5">
+        <div class="section-header">
+          <i class="fas fa-shopping-bag"></i>
+          <h3>Lịch sử đơn hàng</h3>
+        </div>
+        
+        <div v-if="store.orders.length === 0" class="text-center py-4 text-muted">
+          Bạn chưa có đơn hàng nào.
+        </div>
+        
+        <div v-else class="orders-list">
+          <div v-for="order in store.orders" :key="order.Id" class="order-card mb-4 p-3 border rounded shadow-sm">
+            <div class="order-header d-flex justify-content-between align-items-center mb-3">
+              <div>
+                <span class="fw-bold">Mã đơn: {{ order.Id }}</span>
+                <div class="small text-muted">{{ new Date(order.OrderDate).toLocaleString() }}</div>
+              </div>
+              <span class="badge" :class="getStatusBadgeClass(order.Status)">
+                {{ order.Status === 'Pending' ? 'Chờ duyệt' : 
+                   order.Status === 'Shipping' ? 'Đang giao' : 
+                   order.Status === 'Delivered' ? 'Thành công' : 'Đã hủy' }}
+              </span>
+            </div>
+            
+            <div class="order-items">
+              <div v-for="item in order.items" :key="item.Id" class="d-flex align-items-center mb-2">
+                <img :src="item.Image" alt="" style="width: 40px; height: 40px; object-fit: cover; border-radius: 4px;" class="me-2">
+                <div class="flex-grow-1 small">
+                  <div class="fw-semibold">{{ item.ProductName }}</div>
+                  <div class="text-muted">{{ item.Price }}</div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="order-footer mt-3 pt-2 border-top d-flex justify-content-between align-items-center">
+              <div class="small text-muted">HT: {{ order.PaymentMethod }}</div>
+              <div class="fw-bold text-primary">Tổng: {{ order.Total }}</div>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   </div>
 </template>
@@ -128,6 +171,15 @@ const handleSave = async () => {
     alert('Có lỗi xảy ra khi lưu thông tin.')
   } finally {
     isSaving.value = false
+  }
+}
+const getStatusBadgeClass = (status) => {
+  switch (status) {
+    case 'Pending': return 'bg-warning text-dark';
+    case 'Shipping': return 'bg-info text-dark';
+    case 'Delivered': return 'bg-success';
+    case 'Cancelled': return 'bg-danger';
+    default: return 'bg-secondary';
   }
 }
 </script>

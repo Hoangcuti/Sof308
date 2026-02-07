@@ -10,6 +10,7 @@ export const store = reactive({
     users: [],
     products: [],
     posts: [],
+    orders: [],
 
     notification: {
         show: false,
@@ -28,8 +29,54 @@ export const store = reactive({
             this.products = prodRes.data
             this.posts = postRes.data
             this.users = userRes.data
+
+            if (this.isLoggedIn) {
+                this.fetchUserOrders(this.currentUser.id);
+            }
         } catch (error) {
             console.error('Lỗi khi tải dữ liệu từ server:', error)
+        }
+    },
+
+    // --- ORDERS ---
+    async fetchOrders() {
+        try {
+            const res = await axios.get(`${API_URL}/orders`);
+            this.orders = res.data;
+        } catch (error) {
+            console.error('Lỗi khi tải danh sách đơn hàng:', error);
+        }
+    },
+
+    async fetchUserOrders(userId) {
+        try {
+            const res = await axios.get(`${API_URL}/users/${userId}/orders`);
+            this.orders = res.data;
+        } catch (error) {
+            console.error('Lỗi khi tải đơn hàng của người dùng:', error);
+        }
+    },
+
+    async createOrder(orderData, items) {
+        try {
+            const res = await axios.post(`${API_URL}/orders`, { order: orderData, items });
+            if (this.isLoggedIn) {
+                this.fetchUserOrders(this.currentUser.id);
+            }
+            return res.data;
+        } catch (error) {
+            console.error('Lỗi khi tạo đơn hàng:', error);
+            throw error;
+        }
+    },
+
+    async updateOrderStatus(orderId, status) {
+        try {
+            await axios.patch(`${API_URL}/orders/${orderId}`, { status });
+            this.fetchOrders();
+            this.showNotification('Đã cập nhật trạng thái đơn hàng!');
+        } catch (error) {
+            console.error('Lỗi cập nhật trạng thái:', error);
         }
     },
 
@@ -63,6 +110,23 @@ export const store = reactive({
         this.currentUser = user
         this.isLoggedIn = true
         localStorage.setItem('currentUser', JSON.stringify(user))
+        this.fetchUserOrders(user.id);
+    },
+
+    loginWithSocial(platform) {
+        // Simulate a social login fetching user data
+        const dummyUser = {
+            id: Date.now(),
+            username: `${platform}_user`,
+            name: `${platform.charAt(0).toUpperCase() + platform.slice(1)} User`,
+            email: `user@${platform}.com`,
+            role: 'user',
+            image: platform === 'google'
+                ? 'https://cdn-icons-png.flaticon.com/512/2991/2991148.png'
+                : 'https://cdn-icons-png.flaticon.com/512/124/124010.png'
+        }
+        this.login(dummyUser)
+        this.showNotification(`Đã đăng nhập bằng ${platform.charAt(0).toUpperCase() + platform.slice(1)} thành công!`)
     },
 
     logout() {

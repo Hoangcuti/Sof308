@@ -18,11 +18,14 @@
     <div class="product-grid mt-4">
       <div class="product" v-for="prod in categoryProducts" :key="prod.id">
         <span class="click-icon"><i class="fas fa-heart"></i></span>
-        <!-- Image Modal On Click -->
-        <img :src="prod.image" :alt="prod.name" @click="openImageModal(prod.image)" style="cursor: pointer;">
-        <h4>{{ prod.name }}</h4>
+        <router-link :to="'/product/' + prod.id">
+          <img :src="prod.image" :alt="prod.name" style="cursor: pointer;">
+        </router-link>
+        <router-link :to="'/product/' + prod.id" class="text-decoration-none text-dark">
+          <h4>{{ prod.name }}</h4>
+        </router-link>
         <p class="text-danger fw-bold">{{ prod.price }}</p>
-        <button class="btn btn-outline-danger btn-sm w-100" @click="store.addToCart(prod)">Thêm vào giỏ</button>
+        <button class="btn-premium btn-premium-outline btn-sm w-100 py-3 mt-2" @click="store.addToCart(prod)">Thêm vào giỏ</button>
       </div>
     </div>
     

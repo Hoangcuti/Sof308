@@ -1,7 +1,7 @@
 <template>
   <div class="home-view">
     <!-- Carousel -->
-    <div class="carousel mt-5">
+    <div class="carousel mb-4">
       <div class="slides" ref="slidesRef">
         <div class="slide"><img src="https://vn.louisvuitton.com/content/dam/lv/online/picture/asiapacific/2025/Women_Prefall_Odyssey_DI3.jpg?wid=1440" alt="Slide 1"></div>
         <div class="slide"><img src="https://vn.louisvuitton.com/images/is/poster-video/9ed6c1c6-12f9-4ad0-8c85-fa847897396e/y1aMJIjU6NScxl6mmMnXCMeD.jpg?wid=1440" alt="Slide 2"></div>
@@ -11,7 +11,7 @@
       <button @click="moveSlide(1)">❯</button>
     </div>
 
-    <h2 class="Roboto Flex mt-4 text-center">Khám phá các sáng tạo độc đáo của Louis Vuitton</h2>
+    <h2 class="Roboto-Flex my-5 text-center fw-bold text-uppercase letter-spacing-2">Khám phá các sáng tạo độc đáo của Louis Vuitton</h2>
 
     <div class="category-grid">
       <div class="category" v-for="cat in categories" :key="cat.name">
@@ -21,18 +21,26 @@
       </div>
     </div>
 
-    <div class="hero mt-5">
-      <h1 class="hero">Khám phá thế giới Louis Vuitton</h1>
+    <div class="hero my-5">
+      <h1 class="display-4 fw-bold">Khám phá thế giới Louis Vuitton</h1>
     </div>
 
     <div class="product-grid mt-4">
-      <div class="product" v-for="prod in store.products" :key="prod.id">
+      <div class="product" v-for="prod in displayedProducts" :key="prod.id">
         <span class="click-icon"><i class="fas fa-heart"></i></span>
-        <img :src="prod.image" :alt="prod.name" @click="openImageModal(prod.image)" style="cursor: pointer;">
-        <h4>{{ prod.name }}</h4>
+        <router-link :to="'/product/' + prod.id">
+          <img :src="prod.image" :alt="prod.name" style="cursor: pointer;">
+        </router-link>
+        <router-link :to="'/product/' + prod.id" class="text-decoration-none text-dark">
+          <h4>{{ prod.name }}</h4>
+        </router-link>
         <p class="text-danger fw-bold">{{ prod.price }}</p>
-        <button class="btn btn-outline-danger btn-sm w-100" @click="store.addToCart(prod)">Thêm vào giỏ</button>
+        <button class="btn-premium btn-premium-outline btn-sm w-100 py-3 mt-2" @click="store.addToCart(prod)">Thêm vào giỏ</button>
       </div>
+    </div>
+
+    <div v-if="showMoreButton" class="text-center mt-4 mb-5">
+      <button class="btn-premium btn-premium-dark px-5 py-3" @click="showAll = true">Xem tất cả sản phẩm</button>
     </div>
 
 
@@ -51,7 +59,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted, onUnmounted, computed } from 'vue';
 import { store } from '../store';
 
 const showImageModal = ref(false);
@@ -59,6 +67,18 @@ const currentImage = ref('');
 const slideIndex = ref(0);
 const slidesRef = ref(null);
 let slideInterval = null;
+
+const showAll = ref(false);
+const limit = 4;
+
+const displayedProducts = computed(() => {
+  if (showAll.value) return store.products;
+  return store.products.slice(0, limit);
+});
+
+const showMoreButton = computed(() => {
+  return !showAll.value && store.products.length > limit;
+});
 
 const categories = ref([
   { name: 'Túi chéo', image: 'https://vn.louisvuitton.com/images/is/image//content/dam/lv/editorial-content/New-Homepage/2024/central/category/women_bags/Women_Handbags_WW_HP_Category_Push_20240816_DII.jpg?wid=490', link: '/category/tuixach' },
@@ -115,11 +135,12 @@ onUnmounted(() => {
 .slides { display: flex; transition: transform 0.5s ease; }
 .slide { min-width: 100%; }
 .slide img { width: 100%; height: auto; }
-.carousel button { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0, 0, 0, 0.5); color: white; border: none; padding: 10px; cursor: pointer; }
-.carousel button:first-of-type { left: 10px; }
-.carousel button:last-of-type { right: 10px; }
+.carousel button { position: absolute; top: 35%; transform: translateY(-50%); background: rgba(0, 0, 0, 0.3); color: white; border: none; padding: 20px 15px; cursor: pointer; transition: all 0.3s; z-index: 10; font-size: 24px; }
+.carousel button:hover { background: rgba(0, 0, 0, 0.7); }
+.carousel button:first-of-type { left: 0; border-radius: 0 5px 5px 0; }
+.carousel button:last-of-type { right: 0; border-radius: 5px 0 0 5px; }
 
-.hero { text-align: center; padding: 50px 0; background-color: #f5f5f5; }
+.hero { text-align: center; padding: 80px 20px; background-color: #fcfcfc; border-top: 1px solid #f0f0f0; border-bottom: 1px solid #f0f0f0; margin-bottom: 40px; }
 .hero h1 { font-size: 36px; color: #222; }
 
 .stores { text-align: center; padding: 20px; background: #f5f5f5; }

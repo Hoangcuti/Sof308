@@ -96,6 +96,9 @@ header {
   font-weight: bold;
   text-transform: uppercase;
   text-align: center;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
 .logo a {
   text-decoration: none;

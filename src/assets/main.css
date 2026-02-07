@@ -11,17 +11,25 @@ body {
   background-color: #fff;
 }
 
-h1, h2, h3, .logo {
+h1,
+h2,
+h3,
+.logo {
   font-family: 'Noto Serif', serif;
 }
 
-p, span, div, input, button {
+p,
+span,
+div,
+input,
+button {
   font-family: 'Oswald', sans-serif;
 }
 
 /* Common UI Elements */
 .click-icon {
-  color: #e60023; /* Primary Brand Color */
+  color: #e60023;
+  /* Primary Brand Color */
 }
 
 a {
@@ -61,13 +69,74 @@ a:hover {
 ::-webkit-scrollbar {
   width: 8px;
 }
+
 ::-webkit-scrollbar-track {
   background: #f1f1f1;
 }
+
 ::-webkit-scrollbar-thumb {
   background: #888;
   border-radius: 4px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+
+/* Premium Button System */
+.btn-premium {
+  border-radius: 50px !important;
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1) !important;
+  font-weight: 600 !important;
+  letter-spacing: 1px !important;
+  text-transform: uppercase !important;
+  outline: none !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-premium:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.btn-premium:active {
+  transform: translateY(-1px);
+}
+
+.btn-premium-dark {
+  background: rgba(0, 0, 0, 0.8) !important;
+  color: white !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.btn-premium-dark:hover {
+  background: rgba(0, 0, 0, 1) !important;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+}
+
+.btn-premium-outline {
+  background: rgba(255, 255, 255, 0.2) !important;
+  color: #303030 !important;
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+}
+
+.btn-premium-outline:hover {
+  background: rgba(0, 0, 0, 0.05) !important;
+  border-color: rgba(0, 0, 0, 0.3) !important;
+}
+
+.btn-premium-glass {
+  background: rgba(255, 255, 255, 0.15) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  color: white !important;
+  backdrop-filter: blur(8px);
+}
+
+.btn-premium-glass:hover {
+  background: rgba(255, 255, 255, 0.25) !important;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
 }

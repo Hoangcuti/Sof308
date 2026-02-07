@@ -22,7 +22,7 @@
               <td>{{ item.name }}</td>
               <td>{{ item.price }}</td>
               <td>
-                <button class="remove-btn" @click="store.removeFromCart(index)">
+                <button class="btn-premium btn-premium-outline btn-sm px-3 py-2" @click="store.removeFromCart(index)">
                     <i class="fas fa-trash"></i> Xóa
                 </button>
               </td>
@@ -72,7 +72,7 @@
                 <div v-if="deliveryMethod === 'home'" class="mb-3 text-start">
                     <div class="d-flex justify-content-between align-items-center mb-2">
                         <label for="address" class="form-label fw-bold mb-0">Địa chỉ nhận hàng:</label>
-                        <button class="btn btn-sm btn-outline-primary" @click="getLocation">
+                        <button class="btn-premium btn-premium-outline btn-sm px-3 py-2" @click="getLocation">
                             <i class="fas fa-location-arrow"></i> Lấy vị trí để tính phí
                         </button>
                     </div>
@@ -80,6 +80,24 @@
                     <small v-if="distance > 0" class="text-success d-block">
                         Khoảng cách dự kiến: <strong>{{ distance.toFixed(1) }} km</strong>
                     </small>
+                </div>
+
+                <div class="mb-3 text-start">
+                    <label class="form-label d-block fw-bold">Phương thức thanh toán:</label>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" value="cod" v-model="paymentMethod" id="paymentCod">
+                        <label class="form-check-label" for="paymentCod">Thanh toán khi nhận hàng (COD)</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" value="qr" v-model="paymentMethod" id="paymentQr">
+                        <label class="form-check-label" for="paymentQr">Chuyển khoản / Quét mã QR</label>
+                    </div>
+                </div>
+
+                <div v-if="paymentMethod === 'qr'" class="qr-payment-box p-3 mb-3 border rounded bg-white text-center">
+                    <p class="fw-bold mb-2">Quét mã để thanh toán</p>
+                    <img src="/qr-payment.jpg" alt="QR Code" class="img-fluid mb-2" style="width: 250px;">
+                    <p class="small text-muted mb-0">Nội dung: <strong>{{ fullName }} - LV</strong></p>
                 </div>
 
                 <div v-if="deliveryMethod === 'pickup'" class="alert alert-info py-2">
@@ -103,12 +121,75 @@
                     </div>
                 </div>
 
-                <button class="checkout-btn w-100 mt-3 d-flex justify-content-center align-items-center" 
+                <button class="btn-premium btn-premium-dark w-100 mt-3 d-flex justify-content-center align-items-center py-3" 
                         @click="handleCheckout" 
                         :disabled="isSendingEmail">
                     <span v-if="isSendingEmail" class="spinner-border spinner-border-sm me-2"></span>
                     {{ isSendingEmail ? 'ĐANG XỬ LÝ...' : 'XÁC NHẬN THANH TOÁN' }}
                 </button>
+            </div>
+
+            <!-- Enhanced: Order Tracking in Cart Section -->
+            <div v-if="store.isLoggedIn && store.orders.length > 0" class="order-tracking-section mt-5 p-4 border rounded shadow-sm bg-white">
+                <div class="d-flex align-items-center mb-4 border-bottom pb-2">
+                    <i class="fas fa-truck-moving me-2 text-primary fs-4"></i>
+                    <h3 class="mb-0 font-oswald text-uppercase">Theo dõi đơn hàng</h3>
+                </div>
+
+                <div class="row">
+                    <div v-for="order in store.orders" :key="order.Id" class="col-md-6 mb-4">
+                        <div class="order-card p-3 border rounded h-100 bg-light shadow-sm">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="fw-bold text-dark">Mã đơn: #{{ order.Id }}</span>
+                                <span class="badge px-3 py-2" :class="getStatusBadgeClass(order.Status)">
+                                    <i v-if="order.Status === 'Pending'" class="fas fa-clock me-1"></i>
+                                    <i v-if="order.Status === 'Shipping'" class="fas fa-truck me-1"></i>
+                                    <i v-if="order.Status === 'Delivered'" class="fas fa-check-circle me-1"></i>
+                                    <i v-if="order.Status === 'Cancelled'" class="fas fa-times-circle me-1"></i>
+                                    {{ order.Status === 'Pending' ? 'Chờ duyệt' : 
+                                       order.Status === 'Shipping' ? 'Đang giao' : 
+                                       order.Status === 'Delivered' ? 'Thành công' : 'Đã hủy' }}
+                                </span>
+                            </div>
+
+                            <!-- Tracking Progress Bar -->
+                            <div v-if="order.Status !== 'Cancelled'" class="tracking-progress mb-4 px-2">
+                                <div class="progress" style="height: 6px;">
+                                    <div class="progress-bar bg-success" role="progressbar" 
+                                        :style="{ width: order.Status === 'Pending' ? '33%' : (order.Status === 'Shipping' ? '66%' : '100%') }">
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-between mt-2 small text-muted">
+                                    <span :class="{'fw-bold text-dark': order.Status === 'Pending'}">Chờ duyệt</span>
+                                    <span :class="{'fw-bold text-dark': order.Status === 'Shipping'}">Đang giao</span>
+                                    <span :class="{'fw-bold text-dark': order.Status === 'Delivered'}">Thành công</span>
+                                </div>
+                            </div>
+                            
+                            <div class="order-items-mini mb-3">
+                                <p class="small fw-bold text-muted mb-2 text-uppercase">Sản phẩm đã mua:</p>
+                                <div v-for="item in order.items" :key="item.Id" class="d-flex align-items-center mb-2 bg-white p-2 rounded border">
+                                    <img :src="item.Image" alt="" style="width: 40px; height: 40px; object-fit: cover;" class="me-2 rounded shadow-sm">
+                                    <div class="flex-grow-1 overflow-hidden">
+                                        <div class="small text-truncate fw-semibold">{{ item.ProductName }}</div>
+                                        <div class="text-primary smaller fw-bold">{{ item.Price }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="d-flex justify-content-between align-items-center pt-3 border-top mt-auto">
+                                <div class="small">
+                                    <div class="text-muted">Hình thức: {{ order.PaymentMethod.toUpperCase() }}</div>
+                                    <div class="text-muted smaller">Ngày: {{ new Date(order.OrderDate).toLocaleDateString() }}</div>
+                                </div>
+                                <div class="text-end">
+                                    <div class="small text-muted">Tổng cộng</div>
+                                    <div class="fs-5 fw-bold text-danger">{{ order.Total }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -138,6 +219,10 @@
                 <span class="text-muted">Phương thức:</span>
                 <span class="fw-bold">{{ deliveryMethod === 'home' ? 'Giao hàng tận nơi' : 'Đến lấy tại cửa hàng' }}</span>
             </div>
+            <div class="d-flex justify-content-between mb-2">
+                <span class="text-muted">Thanh toán:</span>
+                <span class="fw-bold">{{ lastOrderInfo.paymentMethod === 'cod' ? 'Thanh toán COD' : 'Chuyển khoản / QR' }}</span>
+            </div>
             <div v-if="deliveryMethod === 'home'" class="d-flex justify-content-between mb-2">
                 <span class="text-muted">Địa chỉ:</span>
                 <span class="fw-bold text-end">{{ address }}</span>
@@ -152,7 +237,7 @@
             </div>
         </div>
 
-        <button class="btn btn-dark px-5 py-2 mt-3" @click="resetView">TIẾP TỤC MUA SẮM</button>
+        <button class="btn-premium btn-premium-dark px-5 py-3 mt-3" @click="resetView">TIẾP TỤC MUA SẮM</button>
     </div>
   </div>
 </template>
@@ -173,7 +258,8 @@ const distance = ref(0);
 const isOrderSuccess = ref(false);
 const isSendingEmail = ref(false);
 const lastOrderTotal = ref('');
-const lastOrderInfo = ref({ pickupCode: null });
+const paymentMethod = ref('cod');
+const lastOrderInfo = ref({ pickupCode: null, paymentMethod: 'cod' });
 
 const STORE_COORDS = { lat: 21.0285, lng: 105.8542 };
 
@@ -247,18 +333,41 @@ const handleCheckout = () => {
     if (confirm('Xác nhận đặt hàng và gửi thông tin về email của bạn?')) {
         isSendingEmail.value = true;
         
-        setTimeout(() => {
+        const orderId = Date.now().toString();
+        const orderData = {
+            id: orderId,
+            userId: store.currentUser ? store.currentUser.id : null,
+            fullName: fullName.value,
+            phone: phone.value,
+            email: email.value,
+            address: deliveryMethod.value === 'home' ? address.value : 'Lấy tại cửa hàng',
+            deliveryMethod: deliveryMethod.value,
+            paymentMethod: paymentMethod.value,
+            total: grandTotalFormatted.value,
+            pickupCode: deliveryMethod.value === 'pickup' ? generatePickupCode() : null
+        };
+
+        const orderItems = store.cart.map(item => ({
+            id: item.id,
+            name: item.name,
+            price: item.price,
+            image: item.image
+        }));
+
+        store.createOrder(orderData, orderItems).then(() => {
             lastOrderTotal.value = grandTotalFormatted.value;
-            if (deliveryMethod.value === 'pickup') {
-                lastOrderInfo.value.pickupCode = generatePickupCode();
-            } else {
-                lastOrderInfo.value.pickupCode = null;
-            }
+            lastOrderInfo.value = { 
+                pickupCode: orderData.pickupCode, 
+                paymentMethod: paymentMethod.value 
+            };
             
             isSendingEmail.value = false;
             isOrderSuccess.value = true;
             store.clearCart();
-        }, 2000);
+        }).catch(err => {
+            alert('Lỗi khi thanh toán: ' + err.message);
+            isSendingEmail.value = false;
+        });
     }
 };
 
@@ -269,8 +378,19 @@ const resetView = () => {
     email.value = '';
     address.value = '';
     distance.value = 0;
+    paymentMethod.value = 'cod';
     lastOrderInfo.value.pickupCode = null;
     router.push('/');
+};
+
+const getStatusBadgeClass = (status) => {
+    switch (status) {
+        case 'Pending': return 'bg-warning text-dark';
+        case 'Shipping': return 'bg-info text-dark';
+        case 'Delivered': return 'bg-success';
+        case 'Cancelled': return 'bg-danger';
+        default: return 'bg-secondary';
+    }
 };
 </script>
 
@@ -392,5 +512,38 @@ img {
     background: #f8f9fa;
     border-radius: 12px;
     margin-top: 20px;
+}
+.order-history-section, .order-tracking-section {
+    background: #fff;
+    border: 1px solid #eee;
+}
+
+.order-card {
+    transition: transform 0.2s;
+    border-left: 4px solid #3498db !important;
+}
+
+.order-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1) !important;
+}
+
+.order-items-mini img {
+    border: 1px solid #ddd;
+}
+
+.tracking-progress .progress {
+    background-color: #e9ecef;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.smaller {
+    font-size: 0.75rem;
+}
+
+.badge {
+    font-weight: 600;
+    letter-spacing: 0.5px;
 }
 </style>

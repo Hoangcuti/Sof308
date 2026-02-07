@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Đăng nhập bằng Google</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: #f1f1f1;
+        }
+
+        .card {
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 350px;
+            text-align: center;
+        }
+
+        .logo {
+            width: 75px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 22px;
+            margin-bottom: 8px;
+            color: #202124;
+        }
+
+        p {
+            color: #5f6368;
+            margin-bottom: 30px;
+        }
+
+        .account-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            transition: background 0.2s;
+            text-align: left;
+        }
+
+        .account-item:hover {
+            background: #f8f9fa;
+        }
+
+        .avatar {
+            width: 35px;
+            height: 35px;
+            background: #4285f4;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 15px;
+            font-weight: bold;
+        }
+
+        .info {
+            flex: 1;
+        }
+
+        .name {
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .email {
+            font-size: 12px;
+            color: #70757a;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_Logo.svg/1200px-Google_Logo.svg.png"
+            class="logo" alt="Google">
+        <h1>Chọn tài khoản</h1>
+        <p>để tiếp tục đến Louis Vuitton</p>
+
+        <div class="account-item" onclick="selectAccount('Le Hoang', 'hoangle@gmail.com')">
+            <div class="avatar">LH</div>
+            <div class="info">
+                <div class="name">Le Hoang</div>
+                <div class="email">hoangle@gmail.com</div>
+            </div>
+        </div>
+
+        <div class="account-item" onclick="selectAccount('Guest User', 'guest@gmail.com')">
+            <div class="avatar" style="background: #34a853;">G</div>
+            <div class="info">
+                <div class="name">Guest User</div>
+                <div class="email">guest@gmail.com</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function selectAccount(name, email) {
+            // Gửi dữ liệu về trang chính
+            window.opener.postMessage({
+                type: 'SOCIAL_LOGIN_SUCCESS',
+                platform: 'google',
+                user: { name, email }
+            }, '*');
+            window.close();
+        }
+    </script>
+</body>
+
+</html>
