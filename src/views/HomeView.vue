@@ -28,12 +28,17 @@
     <div class="product-grid mt-4">
       <div class="product" v-for="prod in displayedProducts" :key="prod.id">
         <span class="click-icon"><i class="fas fa-heart"></i></span>
+<<<<<<< HEAD
         <router-link :to="'/product/' + prod.id">
           <img :src="prod.image" :alt="prod.name" style="cursor: pointer;">
         </router-link>
         <router-link :to="'/product/' + prod.id" class="text-decoration-none text-dark">
           <h4>{{ prod.name }}</h4>
         </router-link>
+=======
+        <img :src="prod.image" :alt="prod.name" @click="goToProduct(prod.id)" style="cursor: pointer;">
+        <h4>{{ prod.name }}</h4>
+>>>>>>> 72f3a41cb807eebe8339b71307b64870173a07a8
         <p class="text-danger fw-bold">{{ prod.price }}</p>
         <button class="btn-premium btn-premium-outline btn-sm w-100 py-3 mt-2" @click="store.addToCart(prod)">Thêm vào giỏ</button>
       </div>
@@ -59,8 +64,15 @@
 </template>
 
 <script setup>
+<<<<<<< HEAD
 import { ref, onMounted, onUnmounted, computed } from 'vue';
+=======
+import { ref, onMounted, onUnmounted } from 'vue';
+import { useRouter } from 'vue-router';
+>>>>>>> 72f3a41cb807eebe8339b71307b64870173a07a8
 import { store } from '../store';
+
+const router = useRouter();
 
 const showImageModal = ref(false);
 const currentImage = ref('');
@@ -87,9 +99,8 @@ const categories = ref([
   { name: 'Mũ', image: "https://vn.louisvuitton.com/images/is/image//content/dam/lv/editorial-content/New-Homepage/2025/central/categories/father's-day/Men_Hats_WW_HP_Category_DII.jpg?wid=490", link: '/category/mu' }
 ]);
 
-const openImageModal = (src) => {
-  currentImage.value = src;
-  showImageModal.value = true;
+const goToProduct = (id) => {
+  router.push(`/product/${id}`);
 };
 
 const moveSlide = (n) => {
